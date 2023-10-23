@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -21,6 +23,7 @@ public class Student {
   @Id
   @GeneratedValue(generator = "UUID")
   @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+  @Column(updatable = false)
   private String id;
 
   @Setter
@@ -43,6 +46,8 @@ public class Student {
   @JoinColumn(name = "address_id")
   private Address address;
 
+  @OneToMany(mappedBy = "student")
+  private Set<Course> courses = new HashSet<>();
 
   public Student(String firstName, String lastName, String email) {
     this.firstName = firstName;
@@ -52,5 +57,14 @@ public class Student {
     this.createDate = LocalDateTime.now();
   }
 
+  public void addCourse(Course course){
+    courses.add(course);
+    course.setStudent(this);
+  }
+
+  public void removeCourse(Course course){
+    courses.remove(course);
+    course.setStudent(null);
+  }
 
 }

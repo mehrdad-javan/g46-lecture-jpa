@@ -12,23 +12,22 @@ import lombok.Setter;
 @NoArgsConstructor
 
 @Entity
-public class Address {
+public class Course {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)
   private Long id;
-  @Column(nullable = false)
-  private String street;
-  private String city;
-  @Column(nullable = false, length = 6)
-  private String zipCode;
 
-  @OneToOne(mappedBy = "address")
+  @Column(nullable = false, length = 100)
+  private String courseName;
+
+  @ManyToOne
+  @JoinColumn(name = "student_id")
   private Student student;
 
-  public Address(String street, String city, String zipCode) {
-    this.street = street;
-    this.city = city;
-    this.zipCode = zipCode;
+  public Course(String courseName) {
+    this.courseName = courseName;
   }
+
+
 }
