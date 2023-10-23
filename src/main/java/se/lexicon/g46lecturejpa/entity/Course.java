@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,9 +28,18 @@ public class Course {
   @JoinColumn(name = "student_id")
   private Student student;
 
+  @ManyToMany
+  @JoinTable(
+          name = "courses_instructors",
+          joinColumns = @JoinColumn(name = "course_id"),
+          inverseJoinColumns = @JoinColumn(name = "instructor_id")
+  )
+  private Set<Instructor> instructors = new HashSet<>();
+
   public Course(String courseName) {
     this.courseName = courseName;
   }
+
 
 
 }

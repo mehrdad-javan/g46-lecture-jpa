@@ -23,8 +23,8 @@ public class Address {
   @Column(nullable = false, length = 6)
   private String zipCode;
 
-  @OneToOne(mappedBy = "address")
-  private Student student;
+  //@OneToOne(mappedBy = "address")
+  //private Student student;
 
   public Address(String street, String city, String zipCode) {
     this.street = street;
